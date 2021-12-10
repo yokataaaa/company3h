@@ -18,8 +18,8 @@ try {
     }
   });
 } catch(error) {
-  if (typeof (history.pushState) != "undefined") {
-    history.pushState(null, null, 'index.html');
+  if (typeof (history.pushState) != "undefined") {   
+    window.parent.history.pushState(null, null, 'index.html');
     // ex) 첫 페이지 www.example.com  -> 'index.html' -> www.example.com/index.html
   } else {
     // 브라우저가 pushState 지원하지 않는 경우 처리
