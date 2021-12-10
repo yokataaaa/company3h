@@ -2,17 +2,27 @@ const portfolioContainer = document.querySelector('.portfolio-container');
 const detailsLink = document.querySelectorAll('.portfolio-info .details-link');
 const detailIframe = document.querySelector('.detail-iframe');
 
-portfolioContainer.addEventListener('click', (e) => {
-  if (e.target.dataset.id === 'solar') {
-    let detailIframeSrc = 'portfolio-details.html';
-    detailIframe.setAttribute('src', detailIframeSrc);
+try {
+  portfolioContainer.addEventListener('click', (e) => {
+    if (e.target.dataset.id === 'solar') {
+      let detailIframeSrc = 'portfolio-details.html';
+      detailIframe.setAttribute('src', detailIframeSrc);
+    }
+    else if (e.target.dataset.id === 'equipment') {
+      let detailIframeSrc = 'portfolio-details1.html';
+      detailIframe.setAttribute('src', detailIframeSrc);
+    }
+    else if (e.target.dataset.id === 'customize') {
+      let detailIframeSrc = 'portfolio-details2.html';
+      detailIframe.setAttribute('src', detailIframeSrc);
+    }
+  });
+} catch(error) {
+  if (typeof (history.pushState) != "undefined") {
+    history.pushState(null, null, null);
+    console.log(location.href);
+  } else {
+    // 브라우저가 pushState 지원하지 않는 경우 처리
+    console.log('undefind');
   }
-  else if (e.target.dataset.id === 'equipment') {
-    let detailIframeSrc = 'portfolio-details1.html';
-    detailIframe.setAttribute('src', detailIframeSrc);
-  }
-  else if (e.target.dataset.id === 'customize') {
-    let detailIframeSrc = 'portfolio-details2.html';
-    detailIframe.setAttribute('src', detailIframeSrc);
-  }
-});
+}
