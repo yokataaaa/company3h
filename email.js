@@ -14,12 +14,12 @@ emailSubmit.addEventListener('click', (e) => {
   };
 
   console.log(templateParams);
-  // functionEmail.emailjs.send('service_zv69q4e', 'template_9s2qvvt', templateParams)
-  //        //emailjs.send('service ID', 'template ID', 보낼 내용이 담긴 객체)
-  //   .then(function(response) {
-  //       console.log('SUCCESS!', response.status, response.text);
-  //   }, function(error) {
-  //       console.log('FAILED...', error);
-  //   });  
+  functionEmail.emailjs.send('service_zv69q4e', 'template_9s2qvvt', templateParams)
+         //emailjs.send('service ID', 'template ID', 보낼 내용이 담긴 객체)
+    .then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
+    }, function(error) {
+        console.log('FAILED...', error);
+    });  
 });
 

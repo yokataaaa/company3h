@@ -734,7 +734,7 @@
           </div>
 
           <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-            <form action="#" method="dialog" onsubmit="sendEmail()" role="form" class="php-email-form">
+            <form action="#" method="dialog" role="form" class="php-email-form">
               <div class="row">
                 <div class="form-group col-md-6">
                   <label for="name">Your Name</label>
@@ -758,7 +758,7 @@
                 <div class="error-message"></div>
                 <div class="sent-message">Your message has been sent. Thank you!</div>
               </div>
-              <div class="text-center"><button type="submit" id="email-submit">Send Message</button></div>
+              <div class="text-center"><button type="submit" id="email-submit" onclick="sendEmail()">Send Message</button></div>
             </form>
           </div>
 
@@ -887,37 +887,32 @@
   </script>
   <script type="text/javascript">
     function sendEmail() {
-      const emailSubmit = document.querySelector('#email-submit');
+      let templateParams = {
+        name: document.querySelector('#name').value,
+        email: document.querySelector('#email').value,
+        subject: document.querySelector('#subject').value,
+        message: document.querySelector('#email-message').value,
+      };
 
-      emailSubmit.addEventListener('click', (e) => {
-
-        let templateParams = {
-          name: document.querySelector('#name').value,
-          email: document.querySelector('#email').value,
-          subject: document.querySelector('#subject').value,
-          message: document.querySelector('#email-message').value,
-        };
-
-        console.log(templateParams);
-        emailjs.send('service_zv69q4e', 'template_9s2qvvt', templateParams)
-                //emailjs.send('service ID', 'template ID', 보낼 내용이 담긴 객체)
-          .then(function(response) {
-              console.log('SUCCESS!', response.status, response.text);
-              Swal.fire(
-                '메일 전송이 성공하였습니다!',
-                'You clicked the button!',
-                'success'
-              )
-          }, function(error) {
-              console.log('FAILED...', error);
-              Swal.fire(
-                '메일 전송이 실패하였습니다!',
-                'You clicked the button!',
-                'error'
-              )
-          });  
-      });
-    }         
+      console.log(templateParams);
+      emailjs.send('service_zv69q4e', 'template_9s2qvvt', templateParams)
+              //emailjs.send('service ID', 'template ID', 보낼 내용이 담긴 객체)
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            Swal.fire(
+              '메일 전송이 성공하였습니다!',
+              'You clicked the button!',
+              'success'
+            )
+        }, function(error) {
+            console.log('FAILED...', error);
+            Swal.fire(
+              '메일 전송이 실패하였습니다!',
+              'You clicked the button!',
+              'error'
+            )
+        });  
+    }       
   </script>
 </body>
 
