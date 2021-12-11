@@ -28,6 +28,9 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.min.css">
+
   <!-- User CSS File -->
   <link href="styles.css" rel="stylesheet" type="text/css">
 
@@ -731,31 +734,31 @@
           </div>
 
           <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form action="#" method="dialog" onsubmit="sendEmail()" role="form" class="php-email-form">
               <div class="row">
                 <div class="form-group col-md-6">
                   <label for="name">Your Name</label>
-                  <input type="text" name="name" class="form-control" id="name" required>
+                  <input type="text" name="name" class="form-control" id="name" placeholder="이름을 입력해주세요" required>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="name">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email" required>
+                  <input type="email" class="form-control" name="email" id="email" placeholder="당신의 이메일을 입력해주세요" required>
                 </div>
               </div>
               <div class="form-group">
                 <label for="name">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject" required>
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="제목을 입력해주세요" required>
               </div>
               <div class="form-group">
                 <label for="name">Message</label>
-                <textarea class="form-control" name="message" rows="10" required></textarea>
+                <textarea class="form-control" name="message" id="email-message" rows="10" placeholder="내용을 입력해주세요(ex 견적문의)" required></textarea>
               </div>
               <div class="my-3">
                 <div class="loading">Loading</div>
                 <div class="error-message"></div>
                 <div class="sent-message">Your message has been sent. Thank you!</div>
               </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
+              <div class="text-center"><button type="submit" id="email-submit">Send Message</button></div>
             </form>
           </div>
 
@@ -864,13 +867,58 @@
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <!-- <script src="assets/vendor/php-email-form/validate.js"></script> -->
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.all.min.js"></script>
+
+  <!-- Email JS  -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function() {
+        // https://dashboard.emailjs.com/admin/integration
+        emailjs.init('user_dzaLDc1Vii1NZ3XOpftMo');
+    })();
+  </script>
+  <script type="text/javascript">
+    function sendEmail() {
+      const emailSubmit = document.querySelector('#email-submit');
+
+      emailSubmit.addEventListener('click', (e) => {
+
+        let templateParams = {
+          name: document.querySelector('#name').value,
+          email: document.querySelector('#email').value,
+          subject: document.querySelector('#subject').value,
+          message: document.querySelector('#email-message').value,
+        };
+
+        console.log(templateParams);
+        emailjs.send('service_zv69q4e', 'template_9s2qvvt', templateParams)
+                //emailjs.send('service ID', 'template ID', 보낼 내용이 담긴 객체)
+          .then(function(response) {
+              console.log('SUCCESS!', response.status, response.text);
+              Swal.fire(
+                '메일 전송이 성공하였습니다!',
+                'You clicked the button!',
+                'success'
+              )
+          }, function(error) {
+              console.log('FAILED...', error);
+              Swal.fire(
+                '메일 전송이 실패하였습니다!',
+                'You clicked the button!',
+                'error'
+              )
+          });  
+      });
+    }         
+  </script>
 </body>
 
 </html>
