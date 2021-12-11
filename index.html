@@ -902,14 +902,19 @@
               '메일 전송이 성공하였습니다!',
               'You clicked the button!',
               'success'
-            )
+            );
+
+            this.emailForm.forEach((inputText) => {
+            // console.log(inputText.value);
+            inputText.value = null;
+      });
         }, function(error) {
             console.log('FAILED...', error);
             Swal.fire(
               '메일 전송이 실패하였습니다!',
               'You clicked the button!',
               'error'
-            )
+            );
         });  
     }
     
